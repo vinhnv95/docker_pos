@@ -1,0 +1,48 @@
+version: '3'
+services:
+  magento:
+    image: magestore/mftf:2.3.2
+    command: bash -c "sleep 3; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7081/'; /usr/local/bin/run-apache"
+    volumes:
+      - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
+      - ../.htaccess:/var/www/html/.htaccess
+      - ./pub/apps:/var/www/html/pub/apps
+    ports:
+      - 7081:80
+    environment:
+      BASE_URL: http://192.168.130.46:7081/
+      MAGENTO_DEV_MODE: developer
+    networks:
+      webnet:
+        aliases:
+          - localhost.com
+
+  db:
+    image: magestore/mftf-db:2.3.2
+    environment:
+      MYSQL_ROOT_PASSWORD: magento
+    volumes:
+      - ../db/conf.d:/etc/my.cnf.d
+    networks:
+      - webnet
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 7061:80
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: magento
+    networks:
+      - webnet
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 7021:8025
+    networks:
+      - webnet
+
+networks:
+  webnet:
