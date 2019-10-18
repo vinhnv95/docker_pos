@@ -1,8 +1,8 @@
 version: '3'
 services:
   magento:
-    image: magestore/mftf:2.2.9
-    command: bash -c "sleep 3; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7086/'; /usr/local/bin/run-apache"
+    image: vinhnv95/mftf:2.2.10-apache-php7.1
+    command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7086/'; /usr/local/bin/run-apache"
     volumes:
       # - ./server/app/code:/var/www/html/app/code
       - ../.htaccess:/var/www/html/.htaccess
@@ -19,7 +19,7 @@ services:
           - localhost.com
 
   db:
-    image: magestore/mftf-db:2.2.9
+    image: vinhnv95/mftf-db:2.2.10-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:
