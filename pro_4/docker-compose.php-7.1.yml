@@ -7,6 +7,7 @@ services:
       - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
       - ../.htaccess:/var/www/html/.htaccess
       - ./pub/apps:/var/www/html/pub/apps
+      - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
     ports:
       - 7083:80
     environment:

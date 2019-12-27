@@ -1,17 +1,16 @@
 version: '3'
 services:
   magento:
-    image: vinhnv95/mftf:2.2.10-apache-php7.1
-    command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7088/'; /usr/local/bin/run-apache"
+    image: 192.168.130.18:5000/mftf:ee-2.3.3-apache-php7.2
     volumes:
-      - ./server/app/code:/var/www/html/app/code
+      - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
       - ../.htaccess:/var/www/html/.htaccess
       - ./pub/apps:/var/www/html/pub/apps
-      - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
+      # - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
     ports:
-      - 7088:80
+      - 7090:80
     environment:
-      BASE_URL: http://192.168.130.46:7088/
+      BASE_URL: http://192.168.130.46:7090/
       MAGENTO_DEV_MODE: developer
     networks:
       webnet:
@@ -19,7 +18,7 @@ services:
           - localhost.com
 
   db:
-    image: vinhnv95/mftf-db:2.2.10-percona
+    image: 192.168.130.18:5000/mftf-db:ee-2.3.3-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:
@@ -30,7 +29,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - 7068:80
+      - 7070:80
     environment:
       PMA_HOST: db
       PMA_USER: root
@@ -41,7 +40,7 @@ services:
   mailhog:
     image: mailhog/mailhog
     ports:
-      - 7028:8025
+      - 7030:8025
     networks:
       - webnet
 
