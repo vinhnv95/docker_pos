@@ -9,10 +9,10 @@ services:
       - ./pub/apps:/var/www/html/pub/apps
       - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
       - ./server/app/tests/static/Webpos/phpunit.xml:/var/www/html/dev/tests/static/phpunit.xml
-      - ./server/app/tests/static/Webpos/changed_file.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/_files/changed_file.txt
-      - ../old.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/changed_file.txt
-      - ./server/app/tests/static/Webpos/changed_file.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/blacklist/old.txt
-      - ./server/app/tests/static/Webpos/changed_file.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_file.txt
+      - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/_files/changed_files.txt
+      - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/changed_files.txt
+      - ../old.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/blacklist/old.txt
+      - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_files.txt
     ports:
       - 7085:80
     environment:
