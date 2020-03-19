@@ -16,7 +16,7 @@ services:
     ports:
       - 7083:80
     environment:
-      BASE_URL: http://192.168.130.46:7083/
+      BASE_URL: http://127.0.0.1:7083/
       MAGENTO_DEV_MODE: developer
     networks:
       webnet:
