@@ -1,7 +1,7 @@
 version: '3'
 services:
   magento:
-    image: magestore/mftf:2.3.4-apache-php7.2
+    image: magestore/mftf:2.3.5-apache-php7.2
     # command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7081/'; /usr/local/bin/run-apache"
     volumes:
       - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
@@ -12,6 +12,7 @@ services:
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/_files/changed_files.txt
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/changed_files.txt
       - ./server/app/tests/static/testsuite/Magento/Test/Less/_files/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/blacklist
+      - ./server/app/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_files.txt
     ports:
       - 7081:80
@@ -24,7 +25,7 @@ services:
           - localhost.com
 
   db:
-    image: magestore/mftf-db:2.3.4-percona
+    image: magestore/mftf-db:2.3.5-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:

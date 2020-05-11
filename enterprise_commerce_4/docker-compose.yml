@@ -1,7 +1,7 @@
 version: '3'
 services:
   magento:
-    image: 46.51.237.203:5000/mftf:ee-2.3.4-apache-php7.2
+    image: 46.51.237.203:5000/mftf:ee-2.3.5-apache-php7.2
     volumes:
       - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
       - ../.htaccess:/var/www/html/.htaccess
@@ -11,6 +11,7 @@ services:
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/_files/changed_files.txt
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/changed_files.txt
       - ./server/app/tests/static/testsuite/Magento/Test/Less/_files/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/blacklist
+      - ./server/app/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_files.txt
     ports:
       - 7091:80
@@ -23,7 +24,7 @@ services:
           - localhost.com
 
   db:
-    image: 46.51.237.203:5000/mftf-db:ee-2.3.4-percona
+    image: 46.51.237.203:5000/mftf-db:ee-2.3.5-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:
