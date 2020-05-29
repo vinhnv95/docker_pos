@@ -22,6 +22,13 @@ services:
       webnet:
         aliases:
           - localhost.com
+  
+  elasticsearch:
+    image: elasticsearch:7.7.0
+    environment:
+      - discovery.type=single-node
+    networks:
+      - webnet
 
   db:
     image: 46.51.237.203:5000/mftf-db:ee-2.3.5-percona
