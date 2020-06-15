@@ -14,9 +14,9 @@ services:
       - ./server/app/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_files.txt
     ports:
-      - 7090:80
+      - 9080:80
     environment:
-      BASE_URL: http://127.0.0.1:7090/
+      BASE_URL: http://127.0.0.1:9080/
       MAGENTO_DEV_MODE: developer
     networks:
       webnet:
@@ -25,6 +25,8 @@ services:
   
   elasticsearch:
     image: elasticsearch:7.7.0
+    ports:
+      - 9030:9200
     environment:
       - discovery.type=single-node
     networks:
@@ -42,7 +44,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - 7070:80
+      - 9060:80
     environment:
       PMA_HOST: db
       PMA_USER: root
@@ -53,7 +55,7 @@ services:
   mailhog:
     image: mailhog/mailhog
     ports:
-      - 7030:8025
+      - 9020:8025
     networks:
       - webnet
 

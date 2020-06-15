@@ -72,5 +72,10 @@ if [ $1 == 'up' ]; then
 	echo "Admin: admin/admin123"
 	echo "PHPMyAdmin: $PHPMYADMIN_URL"
 	echo "EMAIL: $EMAIL_URL"
+	if [ $USE_ELASTICSEARCH = true ]; then
+	    PORT=`docker-compose port --protocol=tcp elasticsearch 9200 | sed 's/0.0.0.0://'`
+	    ELASTICSEARCH_URL="http://127.0.0.1:$PORT"
+	    echo "Elasticsearch: $ELASTICSEARCH_URL"
+	fi
 	echo ""
 fi
