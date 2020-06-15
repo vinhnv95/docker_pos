@@ -56,6 +56,21 @@ if [ $1 == 'up' ]; then
 	        php bin/magento cache:clean full_page "
     fi
 
+    PORT=`docker-compose port --protocol=tcp magento 80 | sed 's/0.0.0.0://'`
+	MAGENTO_URL="http://127.0.0.1:$PORT"
+
+	PORT=`docker-compose port --protocol=tcp phpmyadmin 80 | sed 's/0.0.0.0://'`
+	PHPMYADMIN_URL="http://127.0.0.1:$PORT"
+
+	PORT=`docker-compose port --protocol=tcp mailhog 8025 | sed 's/0.0.0.0://'`
+	EMAIL_URL="http://127.0.0.1:$PORT"
+
     echo ""
     echo "Build Magento successfully!!"
+    echo ""
+	echo "Magento: $MAGENTO_URL/admin"
+	echo "Admin: admin/admin123"
+	echo "PHPMyAdmin: $PHPMYADMIN_URL"
+	echo "EMAIL: $EMAIL_URL"
+	echo ""
 fi
