@@ -18,6 +18,7 @@ services:
     environment:
       BASE_URL: http://127.0.0.1:9081/
       MAGENTO_DEV_MODE: developer
+      ELASTICSEARCH_VERSION: elasticsearch7
     networks:
       webnet:
         aliases:

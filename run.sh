@@ -43,8 +43,8 @@ if [ $1 == 'up' ]; then
 	fi
 	if [ $USE_ELASTICSEARCH = true ]; then
 		docker-compose exec -u www-data -T magento bash -c \
-	        "php bin/magento config:set catalog/search/engine elasticsearch7 ; \
-	        php bin/magento config:set catalog/search/elasticsearch7_server_hostname elasticsearch ; \
+	        "php bin/magento config:set catalog/search/engine \${ELASTICSEARCH_VERSION} ; \
+	        php bin/magento config:set catalog/search/\${ELASTICSEARCH_VERSION}_server_hostname elasticsearch ; \
 	        php bin/magento cache:clean config full_page ; \
 	        php bin/magento indexer:reindex ; \
 	        php bin/magento cache:clean full_page "
