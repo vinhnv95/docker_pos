@@ -1,0 +1,65 @@
+version: '3'
+services:
+  magento:
+    image: 46.51.237.203:5000/mftf:ee-2.4.0-apache-php7.4
+    # command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7085/'; /usr/local/bin/run-apache"
+    volumes:
+      - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
+      - ../.htaccess:/var/www/html/.htaccess
+      - ./pub/apps:/var/www/html/pub/apps
+      - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
+      - ./server/app/tests/static/Webpos/phpunit.xml:/var/www/html/dev/tests/static/phpunit.xml
+      - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/_files/changed_files.txt
+      - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/changed_files.txt
+      - ./server/app/tests/static/testsuite/Magento/Test/Less/_files/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/blacklist
+      - ./server/app/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist
+      - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_files.txt
+    ports:
+      - 9085:80
+    environment:
+      BASE_URL: http://127.0.0.1:9085/
+      MAGENTO_DEV_MODE: developer
+      ELASTICSEARCH_VERSION: elasticsearch7
+    networks:
+      webnet:
+        aliases:
+          - localhost.com
+  
+  elasticsearch:
+    image: elasticsearch:7.7.0
+    ports:
+      - 9035:9200
+    environment:
+      - discovery.type=single-node
+    networks:
+      - webnet
+
+  db:
+    image: 46.51.237.203:5000/mftf-db:ee-2.4.0-percona
+    environment:
+      MYSQL_ROOT_PASSWORD: magento
+    volumes:
+      - ../db/conf.d:/etc/my.cnf.d
+    networks:
+      - webnet
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 9065:80
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: magento
+    networks:
+      - webnet
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 9025:8025
+    networks:
+      - webnet
+
+networks:
+  webnet:
