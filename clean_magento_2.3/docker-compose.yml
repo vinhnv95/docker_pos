@@ -1,7 +1,7 @@
 version: '3'
 services:
   magento:
-    image: magestore/mftf:2.3.6-apache-php7.3
+    image: magestore/mftf:2.3.6-p1-apache-php7.3
     # command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7087/'; /usr/local/bin/run-apache"
     volumes:
       # - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
