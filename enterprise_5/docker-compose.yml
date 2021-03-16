@@ -1,11 +1,11 @@
 version: '3'
 services:
   magento:
-    image: magestore/mftf:2.3.6-p1-apache-php7.3
-    # command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7083/'; /usr/local/bin/run-apache"
+    image: magestore/mftf:2.4.2-apache-php7.4
+    # command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7085/'; /usr/local/bin/run-apache"
     volumes:
       - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
-      - ../.htaccess:/var/www/html/.htaccess
+      - ../pub/.htaccess:/var/www/html/pub/.htaccess
       - ./pub/apps:/var/www/html/pub/apps
       - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
       - ./server/app/tests/static/Webpos/phpunit.xml:/var/www/html/dev/tests/static/phpunit.xml
@@ -16,9 +16,9 @@ services:
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_files.txt
       - ../phpcpd/blacklist/common.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Php/_files/phpcpd/blacklist/common.txt
     ports:
-      - 7083:80
+      - 10085:80
     environment:
-      BASE_URL: http://127.0.0.1:7083/
+      BASE_URL: http://127.0.0.1:10085/
       MAGENTO_DEV_MODE: developer
       ELASTICSEARCH_VERSION: elasticsearch7
     networks:
@@ -29,14 +29,14 @@ services:
   elasticsearch:
     image: elasticsearch:7.7.0
     ports:
-      - 7033:9200
+      - 10035:9200
     environment:
       - discovery.type=single-node
     networks:
       - webnet
-  
+
   db:
-    image: magestore/mftf-db:2.3.6-percona
+    image: magestore/mftf-db:2.4.2-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:
@@ -47,7 +47,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - 7063:80
+      - 10065:80
     environment:
       PMA_HOST: db
       PMA_USER: root
@@ -58,7 +58,7 @@ services:
   mailhog:
     image: mailhog/mailhog
     ports:
-      - 7023:8025
+      - 10025:8025
     networks:
       - webnet
 

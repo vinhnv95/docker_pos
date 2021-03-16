@@ -14,6 +14,7 @@ services:
       - ./server/app/tests/static/testsuite/Magento/Test/Less/_files/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Less/_files/blacklist
       - ./server/app/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist:/var/www/html/dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/blacklist
       - ./server/app/tests/static/Webpos/changed_files.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Html/_files/changed_files.txt
+      - ../phpcpd/blacklist/common.txt:/var/www/html/dev/tests/static/testsuite/Magento/Test/Php/_files/phpcpd/blacklist/common.txt
     ports:
       - 8081:80
     environment:
