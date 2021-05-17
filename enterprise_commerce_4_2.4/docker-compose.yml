@@ -1,7 +1,7 @@
 version: '3'
 services:
   magento:
-    image: 46.51.237.203:5000/mftf:ee-2.4.1-apache-php7.4
+    image: 46.51.237.203:5000/mftf:ee-2.4.2-p1-apache-php7.4
     # command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7085/'; /usr/local/bin/run-apache"
     volumes:
       - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
@@ -36,7 +36,7 @@ services:
       - webnet
 
   db:
-    image: 46.51.237.203:5000/mftf-db:ee-2.4.1-percona
+    image: 46.51.237.203:5000/mftf-db:ee-2.4.2-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:
