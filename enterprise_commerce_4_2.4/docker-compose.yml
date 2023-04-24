@@ -1,11 +1,11 @@
 version: '3'
 services:
   magento:
-    image: 46.51.237.203:5000/mftf:ee-2.4.3-apache-php7.4
+    image: 46.51.237.203:5000/mftf:ee-2.4.6-apache-php8.2
     command: bash -c "sleep 5; service cron restart; su www-data -s /bin/bash -c 'php bin/magento cron:install'; /usr/local/bin/run-apache"
     volumes:
       - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
-      - ../.htaccess:/var/www/html/.htaccess
+      - ../pub/.htaccess:/var/www/html/pub/.htaccess
       - ./pub/apps:/var/www/html/pub/apps
       - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
       - ./server/app/tests/static/Webpos/phpunit.xml:/var/www/html/dev/tests/static/phpunit.xml
@@ -36,7 +36,7 @@ services:
       - webnet
 
   db:
-    image: 46.51.237.203:5000/mftf-db:ee-2.4.3-percona
+    image: 46.51.237.203:5000/mftf-db:ee-2.4.6-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:

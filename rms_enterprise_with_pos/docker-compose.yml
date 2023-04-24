@@ -1,17 +1,16 @@
 version: '3'
 services:
   magento:
-    image: magestore/mftf:2.4.6-apache-php8.2
-    # command: bash -c "sleep 5; su www-data -s /bin/bash -c 'php bin/magento setup:store-config:set --base-url=http://192.168.130.46:7087/'; /usr/local/bin/run-apache"
+    image: magestore/mftf:2.4.5-apache-php8.1
+    command: bash -c "sleep 5; service cron restart; su www-data -s /bin/bash -c 'php bin/magento cron:install'; /usr/local/bin/run-apache"
     volumes:
-      # - ./server/app/code/Magestore:/var/www/html/app/code/Magestore
+      - ./Source/server/app/code/Magestore:/var/www/html/app/code/Magestore
       - ../pub/.htaccess:/var/www/html/pub/.htaccess
-      # - ./pub/apps/pos:/var/www/html/pub/apps/pos
-      # - ./server/app/tests/Magestore/PosSampleData:/var/www/html/app/code/Magestore/PosSampleData
+      - ./pub/apps:/var/www/html/pub/apps
     ports:
-      - 8087:80
+      - 9088:80
     environment:
-      BASE_URL: http://127.0.0.1:8087/
+      BASE_URL: http://127.0.0.1:9088/
       MAGENTO_DEV_MODE: developer
       ELASTICSEARCH_VERSION: elasticsearch7
     networks:
@@ -22,14 +21,14 @@ services:
   elasticsearch:
     image: elasticsearch:7.7.0
     ports:
-      - 8037:9200
+      - 9038:9200
     environment:
       - discovery.type=single-node
     networks:
       - webnet
 
   db:
-    image: magestore/mftf-db:2.4.6-percona
+    image: magestore/mftf-db:2.4.5-percona
     environment:
       MYSQL_ROOT_PASSWORD: magento
     volumes:
@@ -40,7 +39,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - 8067:80
+      - 9068:80
     environment:
       PMA_HOST: db
       PMA_USER: root
@@ -51,7 +50,7 @@ services:
   mailhog:
     image: mailhog/mailhog
     ports:
-      - 8027:8025
+      - 9028:8025
     networks:
       - webnet
 
